@@ -1,0 +1,13 @@
+GET http://localhost:5000/api/v1/books/test HTTP/1.1
+###
+
+
+POST http://localhost:5000/api/v1/books/test-post HTTP/1.1
+Host: localhost:5000
+Content-Type: application/json
+
+{
+    "title": "This is a new title",
+    "content": "This is a new content",
+    "status": "published"
+}

@@ -1,0 +1,95 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\.33afab397d2f3b673401ba8364c5ca93a59b09dc-audit.json",
+    "files": [
+        {
+            "date": 1763625788686,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\14-11-20-2025-success.log",
+            "hash": "934f27409f5b5c7811be61825ad9857693b8958e2ed12d4b3dfb8c491dbdeccc"
+        },
+        {
+            "date": 1763630256948,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\15-11-20-2025-success.log",
+            "hash": "5183c11684e3eb82c62fd66e102c076637b28d292b1efd4c14e05bb6e915cf13"
+        },
+        {
+            "date": 1763632978903,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\16-11-20-2025-success.log",
+            "hash": "c700457d7aacde64d7cc299b212d19817b125f4b6ba374b12d7fffb907889489"
+        },
+        {
+            "date": 1763636977436,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\17-11-20-2025-success.log",
+            "hash": "a59daf0742bf26265f6228c7950affd5e2fb65b623af39b17bbf5ba3c2df3d25"
+        },
+        {
+            "date": 1763640196576,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\18-11-20-2025-success.log",
+            "hash": "d84f9aa27d02afca1e3cffe40aaad3478e3620b33c63d34bb1d7b226cbcf3ab1"
+        },
+        {
+            "date": 1763721753331,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\16-11-21-2025-success.log",
+            "hash": "158597929f050840e59402545dfc03189b8b0714d35ad29ade917f81343dd23f"
+        },
+        {
+            "date": 1763722808338,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\17-11-21-2025-success.log",
+            "hash": "495aa5bb4dc8c1322caba217f1f488be128b2308b80b2379c3b6352b8abe5582"
+        },
+        {
+            "date": 1763726936105,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\18-11-21-2025-success.log",
+            "hash": "5a79a198eee1bb4e790bb4cd085811cdc395bfc8c1d67b50f8227ca8bf78929a"
+        },
+        {
+            "date": 1763730531930,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\19-11-21-2025-success.log",
+            "hash": "b4f6c9e371c8454d16daab2df3581255dd69568161aa89a18b83ae1c65083b53"
+        },
+        {
+            "date": 1763734592328,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\20-11-21-2025-success.log",
+            "hash": "d603d8594c6832f83e5569cf0c3d242d69c744bce375654efb21ab343fd8f4d2"
+        },
+        {
+            "date": 1763737268925,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\21-11-21-2025-success.log",
+            "hash": "1e24e8cf415c8d3f71da05b63e45085e86045e1ce4eed9850134d2e20d4afab8"
+        },
+        {
+            "date": 1763740805749,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\22-11-21-2025-success.log",
+            "hash": "8835705650aa6b80862759d26aa60677ffca1ffc1efe10e8c636b1bdfc2ba120"
+        },
+        {
+            "date": 1763797921058,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\13-11-22-2025-success.log",
+            "hash": "87413923f4050a6af3fcda2420cbd011d9dbc1bd7e5d899591a8281a29c7deb4"
+        },
+        {
+            "date": 1763798459133,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\14-11-22-2025-success.log",
+            "hash": "de28f9aa0c71cc17d8bfc87f534419e5d11aeba663faf1b682853151948fac4f"
+        },
+        {
+            "date": 1763802869403,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\15-11-22-2025-success.log",
+            "hash": "9c2ae8b4ed29f37593d716dc025339d8df4b8809c0404d8955aea2f82092694c"
+        },
+        {
+            "date": 1763818676375,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\19-11-22-2025-success.log",
+            "hash": "79375c208ddae8a9b24916ccab0c814affb77769794b043cfef9d1f1b60dda30"
+        },
+        {
+            "date": 1763824390456,
+            "name": "D:\\projects_setup\\backend_setup\\logs\\winston\\successes\\21-11-22-2025-success.log",
+            "hash": "e62e36837a600d8d9720eeb89ce8b03f353f5da884674821f3ae7cda89209239"
+        }
+    ],
+    "hashType": "sha256"
+}
