@@ -3,7 +3,7 @@ import {
   DataBaseConfig,
   DrizzleClient,
   IDatabaseClient,
-} from "@src/interface/databaseclient.interface";
+} from "@src/interface/app.interface/databaseclient.interface";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { schema } from "./schemas";
 import { ApiErrors } from "../errors/apiError";

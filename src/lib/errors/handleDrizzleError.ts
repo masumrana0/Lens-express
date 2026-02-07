@@ -1,4 +1,4 @@
-import { IErrorMessage } from "@src/interface/error.interface";
+import { IErrorMessage } from "@src/interface/app.interface/error.interface";
 import { DrizzleError } from "drizzle-orm/errors";
 
 function handleDrizzleError(error: DrizzleError): IErrorMessage[] {

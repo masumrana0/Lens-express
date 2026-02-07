@@ -9,7 +9,7 @@ import { ROUTE_KEY } from "@src/constants";
 import {
   HTTPMethod,
   RouterDefinition,
-} from "@src/interface/metadata.interface";
+} from "@src/interface/app.interface/metadata.interface";
 import { RequestHandler } from "express";
 import catchAsync from "../utils/catchAsync";
 

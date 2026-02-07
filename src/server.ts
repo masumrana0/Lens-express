@@ -3,12 +3,11 @@ import { Server } from "http";
 import app from "./app";
 import appConfig from "./config";
 import Logger from "./lib/logger/logger";
-import "./test";
 
 process.on("uncaughtException", (err) => {
   Logger.error(
     "UNCAUGHT EXCEPTION! Detected 💥 Shutting down...",
-    `${__filename}`
+    `${__filename}`,
   );
   Logger.error(err, `${__filename}`);
 
@@ -21,7 +20,7 @@ let server: Server;
 async function startServer() {
   Logger.info(
     `Starting server in ${appConfig.AppEnvironment} mode...`,
-    `${__filename}`
+    `${__filename}`,
   );
   try {
     server = app.listen(port, () => {

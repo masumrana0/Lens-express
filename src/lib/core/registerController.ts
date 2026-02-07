@@ -6,15 +6,16 @@ import {
   ROUTE_KEY,
 } from "@src/constants";
 import { ApiErrors } from "@src/lib/errors/apiError";
-import { Constructor } from "@src/interface/common.interface";
+import { Constructor } from "@src/interface/app.interface/common.interface";
 import {
   ControllerMetaData,
   RouterDefinition,
-} from "@src/interface/metadata.interface";
+} from "@src/interface/app.interface/metadata.interface";
 import { Application, Router } from "express";
 import { container } from "tsyringe";
 
 const registerController = (app: Application, controllers: Constructor[]) => {
+  
   controllers.forEach((Controller) => {
     const controllerInstance = container.resolve(Controller);
 
@@ -24,7 +25,7 @@ const registerController = (app: Application, controllers: Constructor[]) => {
       routes:
         (Reflect.getMetadata(
           ROUTE_KEY,
-          Controller.prototype
+          Controller.prototype,
         ) as RouterDefinition[]) || [],
       middlewares:
         Reflect.getMetadata(CONTROLLER_MIDDLEWARE_KEY, Controller) || [],
@@ -33,14 +34,14 @@ const registerController = (app: Application, controllers: Constructor[]) => {
     // Ensure the controller has a base path
     if (!controllerMetaData.basePath) {
       throw ApiErrors.InternalServerError(
-        `[RegisterController]: Controller ${Controller.name} is missing @Controller decorator`
+        `[RegisterController]: Controller ${Controller.name} is missing @Controller decorator`,
       );
     }
 
     // Ensure at least one route is defined
     if (controllerMetaData.routes.length === 0) {
       throw ApiErrors.InternalServerError(
-        `[RegisterController]: Controller ${Controller.name} has no routes defined`
+        `[RegisterController]: Controller ${Controller.name} has no routes defined`,
       );
     }
 
@@ -57,7 +58,7 @@ const registerController = (app: Application, controllers: Constructor[]) => {
       // Ensure the method exists on the controller instance
       if (!(route.methodName in controllerInstance)) {
         throw ApiErrors.InternalServerError(
-          `[RegisterController]: Method ${route.methodName} not found in controller ${Controller.name}`
+          `[RegisterController]: Method ${route.methodName} not found in controller ${Controller.name}`,
         );
       }
 
@@ -65,7 +66,7 @@ const registerController = (app: Application, controllers: Constructor[]) => {
         Reflect.getMetadata(
           MIDDLEWARE_KEY,
           Controller.prototype,
-          route.methodName
+          route.methodName,
         ) || [];
 
       // take controller method level middlewares and concat with route level middlewares
@@ -79,7 +80,7 @@ const registerController = (app: Application, controllers: Constructor[]) => {
     // Register each controller with its base path
     app.use(
       appConfig.defaultConfig.urlPrefixes.api + controllerMetaData.basePath,
-      router
+      router,
     );
   });
 };

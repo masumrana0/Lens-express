@@ -1,4 +1,4 @@
-import { LogLevel } from "@src/interface/config.interface";
+import { LogLevel } from "@src/interface/app.interface/config.interface";
 import path from "path";
 
 export class LoggerConstant {

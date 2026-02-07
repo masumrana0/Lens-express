@@ -9,7 +9,7 @@ import appConfig from "@src/config";
 import ApiError from "@src/lib/errors/apiError";
 import handleDrizzleError from "@src/lib/errors/handleDrizzleError";
 import handleZodError from "@src/lib/errors/handleZodError";
-import { IErrorMessage } from "@src/interface/error.interface";
+import { IErrorMessage } from "@src/interface/app.interface/error.interface";
 import Logger from "@src/lib/logger/logger";
 import { DrizzleError } from "drizzle-orm";
 import { Request, Response, NextFunction } from "express";

@@ -15,7 +15,7 @@
  * Date: 20-11-2025
  */
 
-import { LogLevel } from "@src/interface/config.interface";
+import { LogLevel } from "@src/interface/app.interface/config.interface";
 import { createLogger, format, transports } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 import { LoggerConstant } from "./logger.essential";

@@ -13,7 +13,7 @@ import {
   ISecurityConfig,
   IServerConfig,
   LogLevel,
-} from "@src/interface/config.interface";
+} from "@src/interface/app.interface/config.interface";
 import dotenv from "dotenv";
 
 // load environment variables from .env file

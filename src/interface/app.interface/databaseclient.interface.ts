@@ -1,10 +1,12 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-import { PgSchema } from "drizzle-orm/pg-core";
+import { PgSchema, PgTable } from "drizzle-orm/pg-core";
+import { SQLWrapper } from "drizzle-orm/sql/sql";
 
 export type DrizzleClient = ReturnType<
   typeof drizzle<Record<string, typeof PgSchema>>
 >;
 
+export type ITable = PgTable & { id: SQLWrapper };
 export interface IDatabaseClient {
   connect(): Promise<void>;
   disconnect(): Promise<void>;
@@ -12,7 +14,7 @@ export interface IDatabaseClient {
   isConnected(): boolean;
   executeQuery<T>(
     label: string,
-    queryFn: (db: DrizzleClient) => Promise<T>
+    queryFn: (db: DrizzleClient) => Promise<T>,
   ): Promise<T>;
 }
 
