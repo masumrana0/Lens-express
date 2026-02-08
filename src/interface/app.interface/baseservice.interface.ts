@@ -1,7 +1,7 @@
 import { SQLWrapper } from "drizzle-orm";
 import { FindOptionsSQL, ID } from "./baserepository.interface";
 import { ITable } from "./databaseclient.interface";
-import e from "express";
+ 
 
 export interface IBaseService<TTable extends ITable> {
   findAll(options?: FindOptionsSQL): Promise<TTable["$inferSelect"][]>;

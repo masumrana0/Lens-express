@@ -1,14 +1,16 @@
- import { asc, desc, eq, inArray, sql, SQLWrapper } from "drizzle-orm";
-import {
-  FindOptionsSQL,
-  IBaseRepository,
-  ID,
-} from "@src/interface/baserepository.interface";
+import { asc, desc, eq, inArray, sql, SQLWrapper } from "drizzle-orm";
+import "reflect-metadata";
+import { injectable } from "tsyringe";
 import {
   IDatabaseClient,
   ITable,
 } from "@src/interface/app.interface/databaseclient.interface";
+import {
+  FindOptionsSQL,
+  IBaseRepository,
+} from "@src/interface/app.interface/baserepository.interface";
 
+// @injectable()
 export abstract class BaseRepository<
   TTable extends ITable,
 > implements IBaseRepository<TTable> {

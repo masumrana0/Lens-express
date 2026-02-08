@@ -1,14 +1,14 @@
 import { PgColumn } from "drizzle-orm/pg-core";
 import { BaseRepository } from "./baseRepository";
-import {
-  FindOptionsSQL,
-  ID,
-  OrderDirection,
-} from "@src/interface/baserepository.interface";
 import { FilterBuilder } from "./filterBuilder";
 import { ITable } from "@src/interface/app.interface/databaseclient.interface";
 import { IBaseService } from "@src/interface/app.interface/baseservice.interface";
 import { SQLWrapper } from "drizzle-orm";
+import {
+  FindOptionsSQL,
+  ID,
+  OrderDirection,
+} from "@src/interface/app.interface/baserepository.interface";
 
 export abstract class BaseService<
   TTable extends ITable,

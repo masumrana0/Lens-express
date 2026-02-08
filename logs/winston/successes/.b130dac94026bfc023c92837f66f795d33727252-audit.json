@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\development\\Lens-express\\logs\\winston\\successes\\.b130dac94026bfc023c92837f66f795d33727252-audit.json",
+    "files": [
+        {
+            "date": 1770479473327,
+            "name": "D:\\development\\Lens-express\\logs\\winston\\successes\\18-02-07-2026-success.log",
+            "hash": "0f7b2b909bfa6fd65d21b952ff655255c93f8425ebdec74879e87ceb0a86878d"
+        },
+        {
+            "date": 1770487721441,
+            "name": "D:\\development\\Lens-express\\logs\\winston\\successes\\21-02-07-2026-success.log",
+            "hash": "25f4cd7e5fba3ffdf63d709fdf9ba7f39934bb7787e8dfd88739b195284d95f0"
+        }
+    ],
+    "hashType": "sha256"
+}

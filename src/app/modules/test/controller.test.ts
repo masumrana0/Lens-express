@@ -32,7 +32,7 @@ export class BookController {
   testMethod(req: Request, res: Response) {
     // throw new Error("Test error from BookController testMethod");
     res.send(
-      "Hello from BookController testMethod.................Hello that's me"
+      "Hello from BookController testMethod.................Hello that's me",
     );
   }
 
