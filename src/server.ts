@@ -1,8 +1,10 @@
 import "reflect-metadata";
 import { Server } from "http";
-import app from "./app";
 import appConfig from "./config";
 import Logger from "./lib/logger/logger";
+import { registerDependencies } from "./registry";
+import { createApp } from "./app";
+
 
 process.on("uncaughtException", (err) => {
   Logger.error(
@@ -22,7 +24,11 @@ async function startServer() {
     `Starting server in ${appConfig.AppEnvironment} mode...`,
     `${__filename}`,
   );
+
   try {
+    await registerDependencies();
+
+    const app = createApp();
     server = app.listen(port, () => {
       Logger.info(`Server is running on port ${port}`, `${__filename}`);
     });

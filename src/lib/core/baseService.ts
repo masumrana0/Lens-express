@@ -68,11 +68,13 @@ export abstract class BaseService<
     });
   }
 
-  async create(data: TTable["$inferInsert"]) {
-    return this.catchError(async () => {
-      const item = await this.repository.create(data);
-      return item;
-    });
+  async create(data: TTable["$inferInsert"]): Promise<TTable["$inferSelect"]> {
+    console.log("Creating item:", data);
+    return await this.repository.create(data);
+    // return this.catchError(async () => {
+    //
+
+    // });
   }
 
   async createMany(
@@ -132,7 +134,7 @@ export abstract class BaseService<
 
   // Private method: complete later
   protected handleError(error: unknown): never {
-    console.log("Error finding by id", error);
+    // console.log("Error finding by id", error);
 
     if (error instanceof Error) {
       throw error;
@@ -143,11 +145,12 @@ export abstract class BaseService<
     );
   }
 
-  protected async catchError<T>(callback: () => Promise<T>) {
+  protected async catchError<T>(callback: () => Promise<T>): Promise<T> {
     try {
       return await callback();
     } catch (error) {
       this.handleError(error);
+      throw error;
     }
   }
 

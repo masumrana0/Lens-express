@@ -1,14 +1,15 @@
 import { BaseService } from "@src/lib/core/baseService";
 import { injectable } from "tsyringe";
 import { userTable } from "./user.schema";
-import { BaseRepository } from "@src/lib/core/baseRepository";
+import { UserRepository } from "./user.repository";
 
 @injectable()
-export class UserService extends BaseService<
-  typeof userTable,
-  BaseRepository<typeof userTable>
-> {
-  constructor(repository: BaseRepository<typeof userTable>) {
+export class UserService extends BaseService<typeof userTable, UserRepository> {
+  constructor(repository: UserRepository) {
     super(repository);
   }
 }
+
+
+
+ 

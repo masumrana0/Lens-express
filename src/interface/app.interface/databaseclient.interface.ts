@@ -5,6 +5,7 @@ import { SQLWrapper } from "drizzle-orm/sql/sql";
 export type DrizzleClient = ReturnType<
   typeof drizzle<Record<string, typeof PgSchema>>
 >;
+export const DatabaseClientToken = Symbol("DatabaseClientToken");
 
 export type ITable = PgTable & { id: SQLWrapper };
 export interface IDatabaseClient {

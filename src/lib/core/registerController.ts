@@ -1,3 +1,96 @@
+// import "reflect-metadata";
+// import appConfig from "@src/config";
+// import {
+//   CONTROLLER_KEY,
+//   CONTROLLER_MIDDLEWARE_KEY,
+//   MIDDLEWARE_KEY,
+//   ROUTE_KEY,
+// } from "@src/constants";
+// import { ApiErrors } from "@src/lib/errors/apiError";
+// import { Constructor } from "@src/interface/app.interface/common.interface";
+// import {
+//   ControllerMetaData,
+//   RouterDefinition,
+// } from "@src/interface/app.interface/metadata.interface";
+// import { Application, Router } from "express";
+// import { container } from "tsyringe";
+
+// const registerController = (app: Application, controllers: Constructor[]) => {
+//   controllers.forEach((Controller) => {
+//     const controllerInstance = container.resolve(Controller);
+
+//     // gathering metadata
+//     const controllerMetaData: ControllerMetaData = {
+//       basePath: Reflect.getMetadata(CONTROLLER_KEY, Controller),
+//       routes:
+//         (Reflect.getMetadata(
+//           ROUTE_KEY,
+//           Controller.prototype,
+//         ) as RouterDefinition[]) || [],
+//       middlewares:
+//         Reflect.getMetadata(CONTROLLER_MIDDLEWARE_KEY, Controller) || [],
+//     };
+
+//     // console.log(controllerMetaData);
+
+//     // Ensure the controller has a base path
+//     if (!controllerMetaData.basePath) {
+//       throw ApiErrors.InternalServerError(
+//         `[RegisterController]: Controller ${Controller.name} is missing @Controller decorator`,
+//       );
+//     }
+
+//     // Ensure at least one route is defined
+//     if (controllerMetaData.routes.length === 0) {
+//       throw ApiErrors.InternalServerError(
+//         `[RegisterController]: Controller ${Controller.name} has no routes defined`,
+//       );
+//     }
+
+//     // router registration
+//     const router = Router();
+
+//     // apply controller level middlewares
+//     if (controllerMetaData.middlewares.length > 0) {
+//       router.use(...controllerMetaData.middlewares);
+//     }
+
+//     // register each route Method Level
+//     controllerMetaData.routes.forEach((route) => {
+//       // Ensure the method exists on the controller instance
+//       if (!(route.methodName in controllerInstance)) {
+//         throw ApiErrors.InternalServerError(
+//           `[RegisterController]: Method ${route.methodName} not found in controller ${Controller.name}`,
+//         );
+//       }
+
+//       const middleware =
+//         Reflect.getMetadata(
+//           MIDDLEWARE_KEY,
+//           Controller.prototype,
+//           route.methodName,
+//         ) || [];
+
+//       // take controller method level middlewares and concat with route level middlewares
+//       const handler =
+//         controllerInstance[route.methodName].bind(controllerInstance);
+//       const allMiddlewares = [...route.middlewares, ...middleware];
+
+//       router[route.method](route.path, ...allMiddlewares, handler);
+//     });
+
+//     // console.log(router);
+//     // Register each controller with its base path
+//     app.use(
+//       appConfig.defaultConfig.urlPrefixes.api + controllerMetaData.basePath,
+//       router,
+//     );
+//   });
+// };
+
+// export default registerController;
+
+import "reflect-metadata";
 import appConfig from "@src/config";
 import {
   CONTROLLER_KEY,
@@ -11,15 +104,21 @@ import {
   ControllerMetaData,
   RouterDefinition,
 } from "@src/interface/app.interface/metadata.interface";
-import { Application, Router } from "express";
+import { Application, Router, RequestHandler } from "express";
 import { container } from "tsyringe";
 
+/**
+ * Registers controllers to an Express app with proper DI and middleware handling.
+ * @param app Express application instance
+ * @param controllers Array of controller classes
+ */
 const registerController = (app: Application, controllers: Constructor[]) => {
-  
   controllers.forEach((Controller) => {
+    // Resolve the controller using tsyringe
     const controllerInstance = container.resolve(Controller);
+    console.log(`Registering controller: ${Controller.name}`);
 
-    // gathering metadata
+    // Gather controller metadata
     const controllerMetaData: ControllerMetaData = {
       basePath: Reflect.getMetadata(CONTROLLER_KEY, Controller),
       routes:
@@ -31,53 +130,61 @@ const registerController = (app: Application, controllers: Constructor[]) => {
         Reflect.getMetadata(CONTROLLER_MIDDLEWARE_KEY, Controller) || [],
     };
 
-    // Ensure the controller has a base path
+    // Validate base path
     if (!controllerMetaData.basePath) {
       throw ApiErrors.InternalServerError(
-        `[RegisterController]: Controller ${Controller.name} is missing @Controller decorator`,
+        `[registerController]: Controller ${Controller.name} is missing @Controller decorator`,
       );
     }
 
-    // Ensure at least one route is defined
+    // Validate at least one route
     if (controllerMetaData.routes.length === 0) {
       throw ApiErrors.InternalServerError(
-        `[RegisterController]: Controller ${Controller.name} has no routes defined`,
+        `[registerController]: Controller ${Controller.name} has no routes defined`,
       );
     }
 
-    // router registration
+    // Create a new Express router
     const router = Router();
 
-    // apply controller level middlewares
+    // Apply controller-level middlewares
     if (controllerMetaData.middlewares.length > 0) {
-      router.use(...controllerMetaData.middlewares);
+      router.use(...(controllerMetaData.middlewares as RequestHandler[]));
     }
 
-    // register each route Method Level
+    // Register each route
     controllerMetaData.routes.forEach((route) => {
       // Ensure the method exists on the controller instance
       if (!(route.methodName in controllerInstance)) {
         throw ApiErrors.InternalServerError(
-          `[RegisterController]: Method ${route.methodName} not found in controller ${Controller.name}`,
+          `[registerController]: Method ${route.methodName} not found in controller ${Controller.name}`,
         );
       }
 
-      const middleware =
-        Reflect.getMetadata(
+      // Get method-level middlewares
+      const methodMiddlewares =
+        (Reflect.getMetadata(
           MIDDLEWARE_KEY,
           Controller.prototype,
           route.methodName,
-        ) || [];
+        ) as RequestHandler[]) || [];
 
-      // take controller method level middlewares and concat with route level middlewares
-      const handler =
-        controllerInstance[route.methodName].bind(controllerInstance);
-      const allMiddlewares = [...route.middlewares, ...middleware];
+      // Combine route-level middlewares from decorator + method-level middlewares
+      const allMiddlewares: RequestHandler[] = [
+        ...(route.middlewares || []),
+        ...methodMiddlewares,
+      ];
 
-      router[route.method](route.path, ...allMiddlewares, handler);
+      // Bind the handler to preserve `this`
+      const handler: RequestHandler = (controllerInstance as any)[
+        route.methodName
+      ].bind(controllerInstance);
+
+      // Register route with Express
+      (router as any)[route.method](route.path, ...allMiddlewares, handler);
     });
 
-    // Register each controller with its base path
+    // Register router with base path
     app.use(
       appConfig.defaultConfig.urlPrefixes.api + controllerMetaData.basePath,
       router,
