@@ -65,7 +65,7 @@ export class DatabaseClient implements IDatabaseClient {
       console.error(`[${label}] failed in ${duration.toFixed(2)}ms`);
       console.log(error);
 
-      throw ApiErrors.InternalServerError(`[${label}] Database query failed`);
+      throw ApiErrors.InternalServerError(`[${label}] Database query failed: ${(error as any).message}`);
     }
   }
 }

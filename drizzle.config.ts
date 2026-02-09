@@ -6,7 +6,7 @@ const dbURl =
 export default defineConfig({
   dialect: "postgresql",
   out: "./src/lib/db/migrations",
-  schema: "./src/lib/db/schemas.ts",
+  schema: ["./src/app/modules/**/*.schema.ts", "./src/interface/enum/*.ts"],
 
   dbCredentials: {
     url: dbURl,
