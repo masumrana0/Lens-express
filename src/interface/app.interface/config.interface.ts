@@ -14,6 +14,7 @@ export interface ISecurityConfig {
   jwtSecret: string;
   jwtExpiresIn: string;
   corsOrigins: string[];
+  saltRounds: number;
   allowedHosts?: string[];
 }
 

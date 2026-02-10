@@ -26,6 +26,7 @@ const requiredEnvVars = [
   "PORT",
   "JWT_SECRET",
   "JWT_EXPIRES_IN",
+  "SALT_ROUNDS",
 ];
 
 class AppConfig {
@@ -53,7 +54,7 @@ class AppConfig {
         name: this.getEnv("DATABASE_NAME", true) as string,
         poolSize: parseInt(
           this.getEnv("DATABASE_POOL_SIZE", true) as string,
-          10
+          10,
         ),
       },
 
@@ -62,6 +63,7 @@ class AppConfig {
         jwtExpiresIn: this.getEnv("JWT_EXPIRES_IN", true) as string,
         corsOrigins: this.parseCorsOrigins(),
         allowedHosts: this.parseAllowedHosts(),
+        saltRounds: parseInt(this.getEnv("SALT_ROUNDS", true) as string),
       },
 
       server: {
@@ -73,7 +75,7 @@ class AppConfig {
         pagination: {
           defaultLimit: parseInt(
             this.getEnv("DEFAULT_PAGINATION_LIMIT") || "10",
-            10
+            10,
           ),
           pageQueryKey: "page",
           sizeQueryKey: "size",
@@ -98,12 +100,12 @@ class AppConfig {
   // validates the presence of all required environment variables.
   private loadRequiredEnvVars() {
     const missingVars = requiredEnvVars.filter(
-      (varName) => !process.env[varName]
+      (varName) => !process.env[varName],
     );
 
     if (missingVars.length > 0) {
       throw new Error(
-        `Missing required environment variables: ${missingVars.join(", ")}`
+        `Missing required environment variables: ${missingVars.join(", ")}`,
       );
     }
   }
