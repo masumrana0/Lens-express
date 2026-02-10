@@ -10,6 +10,5 @@ import {
 export class UserRepository extends BaseRepository<typeof userTable> {
   constructor(@inject(DatabaseClientToken) db: IDatabaseClient) {
     super(db, userTable);
-    console.log("UserRepository initialized");
   }
 }

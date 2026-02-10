@@ -12,7 +12,9 @@ export interface IServerConfig {
 
 export interface ISecurityConfig {
   jwtSecret: string;
-  jwtExpiresIn: string;
+  jwtExpiresIn: string | number;
+  jwtRefreshSecret: string;
+  jwtRefreshExpiresIn: string | number;
   corsOrigins: string[];
   saltRounds: number;
   allowedHosts?: string[];

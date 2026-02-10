@@ -1,6 +1,4 @@
 import { asc, desc, eq, inArray, sql, SQLWrapper } from "drizzle-orm";
-import "reflect-metadata";
-import { injectable } from "tsyringe";
 import {
   IDatabaseClient,
   ITable,
@@ -8,9 +6,9 @@ import {
 import {
   FindOptionsSQL,
   IBaseRepository,
+  ID,
 } from "@src/interface/app.interface/baserepository.interface";
 
-// @injectable()
 export abstract class BaseRepository<
   TTable extends ITable,
 > implements IBaseRepository<TTable> {
@@ -67,7 +65,7 @@ export abstract class BaseRepository<
   }
 
   async findOne(where: SQLWrapper): Promise<TTable["$inferSelect"] | null> {
-    const result = await this.db.executeQuery("FindById", async (db) => {
+    const result = await this.db.executeQuery("FindOne", async (db) => {
       const records = await db
         .select()
         .from(this.table as ITable)

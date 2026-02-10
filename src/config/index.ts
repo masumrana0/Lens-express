@@ -26,6 +26,8 @@ const requiredEnvVars = [
   "PORT",
   "JWT_SECRET",
   "JWT_EXPIRES_IN",
+  "JWT_REFRESH_SECRET",
+  "JWT_REFRESH_EXPIRES_IN",
   "SALT_ROUNDS",
 ];
 
@@ -61,6 +63,8 @@ class AppConfig {
       security: {
         jwtSecret: this.getEnv("JWT_SECRET", true) as string,
         jwtExpiresIn: this.getEnv("JWT_EXPIRES_IN", true) as string,
+        jwtRefreshSecret: this.getEnv("JWT_REFRESH_SECRET", true) as string,
+        jwtRefreshExpiresIn: this.getEnv("JWT_REFRESH_EXPIRES_IN", true) as string,
         corsOrigins: this.parseCorsOrigins(),
         allowedHosts: this.parseAllowedHosts(),
         saltRounds: parseInt(this.getEnv("SALT_ROUNDS", true) as string),

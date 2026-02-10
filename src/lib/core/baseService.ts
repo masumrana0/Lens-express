@@ -69,12 +69,10 @@ export abstract class BaseService<
   }
 
   async create(data: TTable["$inferInsert"]): Promise<TTable["$inferSelect"]> {
-    console.log("Creating item:", data);
-    return await this.repository.create(data);
-    // return this.catchError(async () => {
-    //
-
-    // });
+    return this.catchError(async () => {
+      const item = await this.repository.create(data);
+      return item;
+    });
   }
 
   async createMany(

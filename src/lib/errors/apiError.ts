@@ -19,6 +19,7 @@ export class ApiErrors {
   static BadRequest(message: string): ApiError {
     return new ApiError(status.BAD_REQUEST, message);
   }
+
   static Unauthorized(message: string): ApiError {
     return new ApiError(status.UNAUTHORIZED, message);
   }

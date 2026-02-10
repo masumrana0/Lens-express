@@ -1,4 +1,4 @@
-import { IErrorMessage } from "./default.interface/error.interface";
+import { IErrorMessage } from "./error.interface";
 
 export interface IErrorResponse {
   statusCode: number;

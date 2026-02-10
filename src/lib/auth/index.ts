@@ -1,53 +1,91 @@
-// import appConfig from "@src/config";
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
+import appConfig from "@src/config";
+import bcrypt from "bcrypt";
+import jwt, { SignOptions } from "jsonwebtoken";
+import type { Response } from "express";
+import { DecodedUser } from "@src/interface/express_d";
 
-// interface IAuth {
-//   hashPassword(password: string): string;
-//   verifyPassword(password: string, hash: string): boolean;
-//   generateToken(payload: object): string;
-//   verifyToken(token: string): object | null;
-//   setCookie(token: string): void;
-//   clearCookie(): void;
-// }
+interface IAuth {
+  hashPassword(password: string): string;
+  verifyPassword(password: string, hash: string): boolean;
+  generateToken(payload: DecodedUser): string;
+  generateRefreshToken(payload: DecodedUser): string;
+  verifyToken(token: string): DecodedUser | null;
+  setCookie(token: string, key: string, res: Response): void;
+  clearCookie(key: string, res: Response): void;
+}
 
-// class Auth implements IAuth {
-//   static instance: Auth;
-//   constructor() {}
-//   static getInstance() {
-//     if (!Auth.instance) {
-//       return (Auth.instance = new Auth());
-//     }
-//     return Auth.instance;
-//   }
+class Auth implements IAuth {
+  static instance: Auth;
+  constructor() {}
+  static getInstance() {
+    if (!Auth.instance) {
+      return (Auth.instance = new Auth());
+    }
+    return Auth.instance;
+  }
 
-//   //Password Utility
-//   hashPassword(password: string): string {
-//     const hash = bcrypt.hashSync(password, appConfig.security.saltRounds);
-//     return hash;
-//   }
+  //Password Utility
+  hashPassword(password: string): string {
+    const hash = bcrypt.hashSync(password, appConfig.security.saltRounds);
+    return hash;
+  }
 
-//   verifyPassword(password: string, hash: string): boolean {
-//     return bcrypt.compareSync(password, hash);
-//   }
+  verifyPassword(password: string, hash: string): boolean {
+    return bcrypt.compareSync(password, hash);
+  }
 
-//   //JWT Utility
-//   generateToken(payload: object): string {
-//     return jwt.sign(payload, appConfig.security.jwtSecret, {
-//       expiresIn: appConfig.security.jwtExpiresIn,
-//     });
-//   }
+  //JWT Utility
+  generateToken(payload: DecodedUser): string {
+    const secret: jwt.Secret = appConfig.security.jwtSecret;
+    const expiresIn: string | number = appConfig.security.jwtExpiresIn;
 
-//   verifyToken(token: string): object | null {
-//     return jwt.verify(token, appConfig.security.jwtSecret) as object;
-//   }
+    if (!secret) throw new Error("JWT secret is missing");
+    if (!expiresIn) throw new Error("JWT expiresIn is missing");
 
-//   //Cookie Utility
-//   setCookie(token: string, key: string, req: Request, res: Response): void {
-//     res.cookie(key, token, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production",
-//       sameSite: "strict",
-//     });
-//   }
-// }
+    // Force TS to understand exact type
+    const options: SignOptions = { expiresIn } as SignOptions;
+
+    return jwt.sign(payload, secret, options);
+  }
+
+  generateRefreshToken(payload: DecodedUser): string {
+    const secret: jwt.Secret = appConfig.security.jwtRefreshSecret;
+    const expiresIn: string | number = appConfig.security.jwtRefreshExpiresIn;
+
+    if (!secret) throw new Error("JWT refresh secret is missing");
+    if (!expiresIn) throw new Error("JWT refresh expiresIn is missing");
+
+    // Force TS to understand exact type
+    const options: SignOptions = { expiresIn } as SignOptions;
+
+    return jwt.sign(payload, secret, options);
+  }
+
+  verifyToken(token: string): DecodedUser | null {
+    return jwt.verify(
+      token,
+      appConfig.security.jwtSecret as jwt.Secret,
+    ) as DecodedUser;
+  }
+
+  //Cookie Utility
+  setCookie(token: string, key: string, res: Response): void {
+    res.cookie(key, token, {
+      httpOnly: true,
+      secure: appConfig.AppEnvironment === "production",
+      sameSite: "strict",
+    });
+  }
+
+  clearCookie(key: string, res: Response): void {
+    res.clearCookie(key, {
+      httpOnly: true,
+      secure: appConfig.AppEnvironment === "production",
+      sameSite: "strict",
+    });
+  }
+}
+
+const auth = Auth.getInstance();
+
+export default auth;

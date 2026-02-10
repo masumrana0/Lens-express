@@ -7,6 +7,7 @@
     "paths": {
       "@src/*": ["src/*"]
     },
+    "typeRoots": ["./src/interface/express_d", "./node_modules/@types"],
 
     // Environment Settings
     "module": "nodenext",
