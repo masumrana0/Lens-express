@@ -3,7 +3,6 @@ import { userTable } from "../user/user.schema";
 import { AuthRepository } from "./auth.repository";
 import { injectable } from "tsyringe";
 import {
-  IAuthResponse,
   ILoginData,
   ILoginResponse,
 } from "@src/interface/module.interface/auth.interface";
