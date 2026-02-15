@@ -1,5 +1,8 @@
-// employee.ts
-import { employeeStatusEnum, employeeTypeEnum } from "@src/interface/enum/enum";
+import {
+  employeeStatusEnum,
+  employeeTypeEnum,
+  salaryTypeEnum,
+} from "@src/interface/enum/enum";
 import {
   pgTable,
   uuid,
@@ -19,7 +22,7 @@ export const employeeTable = pgTable("employees", {
   email: varchar("email", { length: 255 }),
   phone: varchar("phone", { length: 50 }).notNull(),
   position: varchar("position", { length: 255 }).notNull(),
-  salaryType: employeeStatusEnum("salary_type").notNull(),
+  salaryType: salaryTypeEnum("salary_type").notNull(),
   salaryRate: doublePrecision("salary_rate").notNull(),
   overtimeRate: doublePrecision("overtime_rate").default(0),
   joinDate: timestamp("join_date", { withTimezone: true }).defaultNow(),

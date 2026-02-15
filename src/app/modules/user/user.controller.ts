@@ -10,7 +10,7 @@ import Use from "@src/lib/decorators/middleware.decorator";
 import AuthMiddleware from "@src/app/middlewares/auth-middleware";
 
 @injectable()
-// @Use(AuthMiddleware.authenticate)
+@Use(AuthMiddleware.authenticate)
 @Controller("/user")
 export class UserController {
   constructor(private readonly service: UserService) {}

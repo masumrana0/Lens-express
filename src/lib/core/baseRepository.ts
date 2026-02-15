@@ -156,11 +156,7 @@ export abstract class BaseRepository<
       return records;
     });
 
-    if (!result) {
-      return null;
-    }
-
-    return (result as TTable["$inferSelect"][])[0];
+    return (result as TTable["$inferSelect"][])[0] ?? null;
   }
 
   async updateMany(

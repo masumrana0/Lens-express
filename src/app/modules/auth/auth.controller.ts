@@ -7,6 +7,8 @@ import sendResponse from "@src/lib/utils/sendResponse";
 import type { Request, Response } from "express";
 import { Post } from "@src/lib/decorators/router.decorator";
 import Controller from "@src/lib/decorators/controller.decorator";
+import Use from "@src/lib/decorators/middleware.decorator";
+import AuthMiddleware from "@src/app/middlewares/auth-middleware";
 
 @injectable()
 @Controller("/auth")
@@ -25,6 +27,18 @@ export class AuthController {
     return sendResponse(res, {
       statusCode: 200,
       message: "Login successful",
+      data: null,
+    });
+  }
+
+  @Use(AuthMiddleware.authenticate)
+  @Post("/logout")
+  async logout(req: Request, res: Response) {
+    auth.clearCookie(ACCESS_TOKEN, res);
+    auth.clearCookie(REFRESH_TOKEN, res);
+    return sendResponse(res, {
+      statusCode: 200,
+      message: "Logout successful",
       data: null,
     });
   }

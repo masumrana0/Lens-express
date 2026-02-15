@@ -7,6 +7,9 @@ import registerController from "./lib/core/registerController";
 import { UserController } from "./app/modules/user/user.controller";
 import cookieParser from "cookie-parser";
 import { AuthController } from "./app/modules/auth/auth.controller";
+import { EmployeeController } from "./app/modules/employee/employee.controller";
+import SiteController from "./app/modules/site/site.controller";
+import AttendanceController from "./app/modules/attendance/attendance.controller";
 
 export const createApp = () => {
   const app: Application = express();
@@ -19,7 +22,13 @@ export const createApp = () => {
   app.use(express.urlencoded({ extended: true }));
 
   // Register controllers
-  registerController(app, [UserController, AuthController]);
+  registerController(app, [
+    AuthController,
+    UserController,
+    EmployeeController,
+    SiteController,
+    AttendanceController,
+  ]);
 
   // global error handler
   app.use(globalErrorHandler);

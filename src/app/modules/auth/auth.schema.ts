@@ -1,9 +1,8 @@
 import { userTable } from "../user/user.schema";
-
 import { pgTable, uuid, text, timestamp, index } from "drizzle-orm/pg-core";
 
 export const refreshTokenSessionTable = pgTable(
-  " refresh_token_sessions",
+  "refresh_token_sessions",
   {
     id: uuid("id").defaultRandom().primaryKey(),
     userId: uuid("user_id")

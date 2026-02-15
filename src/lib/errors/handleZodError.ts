@@ -1,8 +1,9 @@
-import { IErrorResponse } from "@src/interface/response.interface";
+ 
 import { ZodError } from "zod";
 import status from "http-status";
+import { IErrorResponse } from "@src/interface/app.interface";
 
-function handleZodError(error: ZodError): IErrorResponse {
+function handleZodError(error: ZodError): IErrorResponse{
   const errorMessages = error.issues.map((issue) => {
     return {
       path: issue.path.join("."),

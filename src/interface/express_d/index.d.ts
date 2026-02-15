@@ -1,6 +1,7 @@
 import "express";
 
 import "express-serve-static-core";
+import { IRole } from "../module.interface/auth.interface";
 
 declare module "express-serve-static-core" {
   interface Request {
@@ -11,6 +12,6 @@ declare module "express-serve-static-core" {
 interface DecodedUser {
   id: string;
   email: string;
-  role: string;
+  role: IRole;
   name: string;
 }

@@ -17,7 +17,7 @@ export class AuthService extends BaseService<typeof userTable, AuthRepository> {
     return this.repository.login(data);
   }
 
-  async logout(user: DecodedUser): Promise<void> {
-    return this.repository.logout(user);
-  }
+  // async logout(user: DecodedUser): Promise<void> {
+  //   return this.repository.logout(user);
+  // }
 }

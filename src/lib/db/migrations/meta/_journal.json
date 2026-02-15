@@ -8,6 +8,20 @@
       "when": 1770626295664,
       "tag": "0000_closed_radioactive_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1770881199341,
+      "tag": "0001_bored_fabian_cortez",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1771156885783,
+      "tag": "0002_curious_liz_osborn",
+      "breakpoints": true
     }
   ]
 }

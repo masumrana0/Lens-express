@@ -12,8 +12,9 @@ import {
   ILoginData,
   IAuthRepository,
   ILoginResponse,
+  // IRefreshTokenResponse,
 } from "@src/interface/module.interface/auth.interface";
-import { ApiErrors } from "@src/lib/errors/apiError";
+// import { ApiErrors } from "@src/lib/errors/apiError";
 
 @injectable()
 export class AuthRepository
@@ -38,37 +39,40 @@ export class AuthRepository
       isExistingUser.password,
     );
     if (!isPasswordValid) {
-      throw new Error("Invalid email or password");
+      throw new Error("Invalid email or password");x
     }
 
     const payload: DecodedUser = {
       id: isExistingUser.id,
       role: isExistingUser?.role as string,
     } as DecodedUser;
+
+
 
     const accessToken = auth.generateToken(payload);
     const refreshToken = auth.generateRefreshToken(payload);
+
     return { accessToken, refreshToken };
   }
 
-  async refreshToken(user: DecodedUser): Promise<ILoginResponse> {
-    const isExistingUser = (await this.findOne(
-      eq(userTable.id, user.id),
-    )) as (typeof userTable)["$inferSelect"];
+  // async refreshToken(user: DecodedUser): Promise<IRefreshTokenResponse> {
+  //   const isExistingUser = (await this.findOne(
+  //     eq(userTable.id, user.id),
+  //   )) as (typeof userTable)["$inferSelect"];
 
-    if (!isExistingUser) {
-      throw ApiErrors.Unauthorized("User not found");
-    }
+  //   if (!isExistingUser) {
+  //     throw ApiErrors.Unauthorized("User not found");
+  //   }
 
-    const payload: DecodedUser = {
-      id: isExistingUser.id,
-      role: isExistingUser?.role as string,
-    } as DecodedUser;
+  //   const payload: DecodedUser = {
+  //     id: isExistingUser.id,
+  //     role: isExistingUser?.role,
+  //   } as DecodedUser;
 
-    const accessToken = auth.generateToken(payload);
+  //   const accessToken = auth.generateToken(payload);
 
-    return { accessToken };
-  }
+  //   return { accessToken };
+  // }
 
-  async logout(user: DecodedUser): Promise<void> {}
+  // async logout(user: DecodedUser): Promise<void> {}
 }

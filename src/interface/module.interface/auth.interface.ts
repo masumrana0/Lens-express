@@ -1,6 +1,6 @@
 import { DecodedUser } from "../express_d";
 
-export type IAuthResponse = {
+export type IRefreshTokenResponse = {
   accessToken: string;
   refreshToken?: string;
 };
@@ -15,8 +15,9 @@ export type ILoginData = {
   password: string;
 };
 
+export type IRole = "admin" | "super_admin";
 export interface IAuthRepository {
   login(data: ILoginData): Promise<ILoginResponse>;
-  logout(user: DecodedUser): Promise<void>;
-  refreshToken(user: DecodedUser): Promise<ILoginResponse>;
+  // logout(user: DecodedUser): Promise<void>;
+  // refreshToken(user: DecodedUser): Promise<ILoginResponse>;
 }

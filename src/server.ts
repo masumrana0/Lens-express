@@ -1,10 +1,8 @@
-import "reflect-metadata";
 import { Server } from "http";
 import appConfig from "./config";
 import Logger from "./lib/logger/logger";
 import { registerDependencies } from "./registry";
 import { createApp } from "./app";
-
 
 process.on("uncaughtException", (err) => {
   Logger.error(

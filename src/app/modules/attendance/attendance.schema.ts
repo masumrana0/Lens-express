@@ -13,7 +13,7 @@ import {
 import { employeeTable } from "../employee/employee.schema";
 import { sitesTable } from "../site/site.schema";
 
-export const attendanceRecords = pgTable("attendance_records", {
+export const attendanceTable = pgTable("attendance_records", {
   id: uuid("id").primaryKey().defaultRandom(),
   employeeId: uuid("employee_id")
     .references(() => employeeTable.id)

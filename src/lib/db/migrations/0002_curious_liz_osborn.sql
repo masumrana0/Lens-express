@@ -1,0 +1,1 @@
+ALTER TABLE "employees" ALTER COLUMN "salary_type" SET DATA TYPE "public"."salary_type" USING "salary_type"::text::"public"."salary_type";
