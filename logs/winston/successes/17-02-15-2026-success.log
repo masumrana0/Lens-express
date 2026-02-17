@@ -1,0 +1,3 @@
+[05:00:10 PM] info [.\D:\development\Lens-express\src\server.ts] : Starting server in development mode...
+[05:00:12 PM] info [.\D:\development\Lens-express\src\registry.ts] : Database connected successfully
+[05:00:12 PM] info [.\D:\development\Lens-express\src\server.ts] : Server is running on port 5000

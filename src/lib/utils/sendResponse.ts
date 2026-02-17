@@ -6,13 +6,19 @@ const sendResponse = <T>(
   res: Response,
   responseData: IApiResponse<T>,
 ): void => {
-  const response = {
-    statusCode: responseData.statusCode || status.OK,
-    success: true,
+  // Build base response
+  const response: IApiResponse<T> = {
+    statusCode: responseData.statusCode ?? status.OK,
+    success: responseData.success ?? true,
     message: responseData.message,
-    metadata: responseData.meta,
     data: responseData.data,
   };
+
+  // Add meta only if it exists
+  if (responseData.meta) {
+    response.meta = responseData.meta;
+  }
+
   res.status(response.statusCode).json(response);
 };
 

@@ -50,22 +50,12 @@ export class DatabaseClient implements IDatabaseClient {
 
   async executeQuery<T>(
     label: string,
-    queryFn: (db: DrizzleClient) => Promise<T>
+    queryFn: (db: DrizzleClient) => Promise<T>,
   ): Promise<T> {
     const start = performance.now();
-
-    try {
-      const result = await queryFn(this.client);
-      const duration = performance.now() - start;
-
-      console.log(`[${label}] completed in ${duration.toFixed(2)}ms`);
-      return result;
-    } catch (error) {
-      const duration = performance.now() - start;
-      console.error(`[${label}] failed in ${duration.toFixed(2)}ms`);
-      console.log(error);
-
-      throw ApiErrors.InternalServerError(`[${label}] Database query failed: ${(error as any).message}`);
-    }
+    const result = await queryFn(this.client);
+    const duration = performance.now() - start;
+    console.log(`[${label}] completed in ${duration.toFixed(2)}ms`);
+    return result;
   }
 }

@@ -1,14 +1,12 @@
 // enums.ts
 import { pgEnum } from "drizzle-orm/pg-core";
 
-export const userRoleEnum = pgEnum("user_role", [
-  "super_admin",
-  "admin",
-]);
+export const userRoleEnum = pgEnum("user_role", ["super_admin", "admin"]);
 
 export const siteStatusEnum = pgEnum("site_status", [
-  "active",
-  "inactive",
+  "running",
+  "stopped",
+  "completed",
 ]);
 
 export const employeeStatusEnum = pgEnum("employee_status", [
@@ -22,10 +20,7 @@ export const employeeTypeEnum = pgEnum("employee_type", [
   "contract",
 ]);
 
-export const salaryTypeEnum = pgEnum("salary_type", [
-  "hourly",
-  "daily",
-]);
+export const salaryTypeEnum = pgEnum("salary_type", ["hourly", "daily"]);
 
 export const attendanceStatusEnum = pgEnum("attendance_status", [
   "present",
@@ -35,7 +30,4 @@ export const attendanceStatusEnum = pgEnum("attendance_status", [
   "leave",
 ]);
 
-export const salaryStatusEnum = pgEnum("salary_status", [
-  "pending",
-  "paid",
-]);
+export const salaryStatusEnum = pgEnum("salary_status", ["pending", "paid"]);

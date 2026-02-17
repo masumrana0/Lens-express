@@ -2,7 +2,7 @@ import {
   employeeStatusEnum,
   employeeTypeEnum,
   salaryTypeEnum,
-} from "@src/interface/enum/enum";
+} from "@src/enum/enum";
 import {
   pgTable,
   uuid,

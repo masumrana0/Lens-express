@@ -9,6 +9,7 @@ import {
   ID,
   OrderDirection,
 } from "@src/interface/app.interface/baserepository.interface";
+import { off } from "process";
 
 export abstract class BaseService<
   TTable extends ITable,
@@ -16,23 +17,35 @@ export abstract class BaseService<
 > implements IBaseService<TTable> {
   constructor(protected readonly repository: TRepository) {}
 
-  async findAll(options?: FindOptionsSQL): Promise<TTable["$inferSelect"][]> {
-    return this.catchError(async () => {
-      const filter = options?.where
-        ? FilterBuilder.build(options?.where as any)
-        : undefined;
+  async findAll(options?: FindOptionsSQL): Promise<{
+    data: TTable["$inferSelect"][];
+    meta?: FindOptionsSQL & { total: number };
+  }> {
+    // console.log("Finding all with options:", options);
 
-      const findOptions: FindOptionsSQL = {
-        limit: options?.limit ?? 10,
-        offset: options?.offset ?? 0,
-        orderBy: this.transformOrderBy(options?.orderBy),
-      };
-      if (filter !== undefined) {
-        findOptions.where = filter;
-      }
+    const filter = options?.where
+      ? FilterBuilder.build(options?.where as any)
+      : undefined;
 
-      return await this.repository.findAll(findOptions);
-    });
+    const findOptions: FindOptionsSQL = {
+      limit: options?.limit ?? 10,
+      offset: options?.offset ?? 0,
+      orderBy: this.transformOrderBy(options?.orderBy),
+    };
+
+    if (filter !== undefined) {
+      findOptions.where = filter;
+    }
+
+    const result = await this.repository.findAll(findOptions);
+    return {
+      data: result,
+      meta: {
+        total: result.length,
+        offset: findOptions.offset,
+        limit: findOptions.limit,
+      },
+    };
   }
 
   async findOne(where: SQLWrapper): Promise<TTable["$inferSelect"] | null> {

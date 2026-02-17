@@ -1,10 +1,12 @@
 import { SQLWrapper } from "drizzle-orm";
 import { FindOptionsSQL, ID } from "./baserepository.interface";
 import { ITable } from "./databaseclient.interface";
- 
 
 export interface IBaseService<TTable extends ITable> {
-  findAll(options?: FindOptionsSQL): Promise<TTable["$inferSelect"][]>;
+  findAll(options?: FindOptionsSQL): Promise<{
+    data: TTable["$inferSelect"][];
+    meta?: FindOptionsSQL & { total: number };
+  }>;
   findById(id: ID): Promise<TTable["$inferSelect"] | null>;
   findOne(where: SQLWrapper): Promise<TTable["$inferSelect"] | null>;
   findAndCount(

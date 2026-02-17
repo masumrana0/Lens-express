@@ -118,6 +118,81 @@ export class FilterBuilder {
     return group.not ? not(result) : result;
   }
 
+  // private static processRule(rule: FilterRule): SQLWrapper {
+  //   const column = sql.identifier(rule.field);
+
+  //   switch (rule.operator) {
+  //     case Operators.EQUALS:
+  //       return sql`${column} = ${rule.value}`;
+
+  //     case Operators.NOT_EQUALS:
+  //       return sql`${column} != ${rule.value}`;
+
+  //     case Operators.GREATER:
+  //       return sql`${column} > ${rule.value}`;
+
+  //     case Operators.GREATER_EQUALS:
+  //       return sql`${column} >= ${rule.value}`;
+
+  //     case Operators.LESS:
+  //       return sql`${column} < ${rule.value}`;
+
+  //     case Operators.LESS_EQUALS:
+  //       return sql`${column} <= ${rule.value}`;
+
+  //     case Operators.CONTAINS:
+  //       return sql`${column} ILIKE %${rule.value}%`;
+
+  //     case Operators.NOT_CONTAINS:
+  //       return sql`${column} NOT ILIKE %${rule.value}%`;
+
+  //     case Operators.STARTS_WITH:
+  //       return sql`${column} ILIKE ${rule.value}%`;
+
+  //     case Operators.ENDS_WITH:
+  //       return sql`${column} ILIKE %${rule.value}`;
+
+  //     case Operators.LIKE:
+  //       return sql`${column} ILIKE ${rule.value}`;
+
+  //     case Operators.ILIKE:
+  //       return sql`${column} ILIKE ${rule.value}`;
+
+  //     case Operators.IS_NULL:
+  //       return sql`${column} IS NULL`;
+
+  //     case Operators.IS_NOT_NULL:
+  //       return sql`${column} IS NOT NULL`;
+
+  //     case Operators.IN:
+  //       if (!Array.isArray(rule.value)) {
+  //         return sql`${column} = ANY(${rule.value})`;
+  //       }
+  //       return sql`${column} = ANY(ARRAY[${sql.join(rule.value)}])`;
+
+  //     case Operators.NOT_IN:
+  //       if (!Array.isArray(rule.value)) {
+  //         return sql`${column} != ANY(${rule.value})`;
+  //       }
+  //       return sql`${column} != ANY(ARRAY[${sql.join(rule.value)}])`;
+
+  //     case Operators.BETWEEN:
+  //       if (!Array.isArray(rule.value) || rule.value.length !== 2) {
+  //         throw new Error("Between operator requires two values");
+  //       }
+  //       return sql`${column} BETWEEN ${rule.value[0]} AND ${rule.value[1]}`;
+
+  //     case Operators.NOT_BETWEEN:
+  //       if (!Array.isArray(rule.value) || rule.value.length !== 2) {
+  //         throw new Error("Between operator requires two values");
+  //       }
+  //       return sql`${column} NOT BETWEEN ${rule.value[0]} AND ${rule.value[1]}`;
+
+  //     default:
+  //       throw new Error(`Unknown operator: ${rule.operator}`);
+  //   }
+  // }
+
   private static processRule(rule: FilterRule): SQLWrapper {
     const column = sql.identifier(rule.field);
 
@@ -140,20 +215,24 @@ export class FilterBuilder {
       case Operators.LESS_EQUALS:
         return sql`${column} <= ${rule.value}`;
 
+      // ✅ FIXED LINES BELOW
+
       case Operators.CONTAINS:
-        return sql`${column} ILIKE %${rule.value}%`;
+        return sql`${column} ILIKE ${`%${rule.value}%`}`;
 
       case Operators.NOT_CONTAINS:
-        return sql`${column} NOT ILIKE %${rule.value}%`;
+        return sql`${column} NOT ILIKE ${`%${rule.value}%`}`;
 
       case Operators.STARTS_WITH:
-        return sql`${column} ILIKE ${rule.value}%`;
+        return sql`${column} ILIKE ${`${rule.value}%`}`;
 
       case Operators.ENDS_WITH:
-        return sql`${column} ILIKE %${rule.value}`;
+        return sql`${column} ILIKE ${`%${rule.value}`}`;
+
+      // ✅ FIXED LINES ABOVE
 
       case Operators.LIKE:
-        return sql`${column} LIKE ${rule.value}`;
+        return sql`${column} ILIKE ${rule.value}`;
 
       case Operators.ILIKE:
         return sql`${column} ILIKE ${rule.value}`;

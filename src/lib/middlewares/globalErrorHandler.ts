@@ -1,6 +1,6 @@
 /**
  * Title: 'Global Error Handler Middleware'
- * Description: 'Centralized error handling middleware that processes all application errors, formats them consistently, and provides appropriate         *               responses with detailed error information for development and production environments.'
+ * Description: 'Centralized error handling middleware that processes all application errors, formats them consistently, and provides appropriate  responses with detailed error information for development and production environments.'
  * Author: 'Masum Rana'
  * Date: 20-11-2025
  */
@@ -11,15 +11,16 @@ import handleDrizzleError from "@src/lib/errors/handleDrizzleError";
 import handleZodError from "@src/lib/errors/handleZodError";
 import { IErrorMessage } from "@src/interface/app.interface/error.interface";
 import Logger from "@src/lib/logger/logger";
-import { DrizzleError } from "drizzle-orm";
+// import { DrizzleError } from "drizzle-orm";
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
+// import { DrizzleError } from "drizzle-orm";
 
 const globalErrorHandler = (
   error: unknown,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   appConfig.AppEnvironment === "development"
     ? console.log(`😢`, { error })
@@ -29,8 +30,9 @@ const globalErrorHandler = (
   let message = `Something went wrong..!`;
   let errorMessages: IErrorMessage[] = [];
 
-  if (error instanceof DrizzleError) {
-    message = error.message;
+  if ((error as any)?.cause?.code) {
+    statusCode = 400;
+    message = "Database validation error";
     errorMessages = handleDrizzleError(error);
   } else if (error instanceof ZodError) {
     const simplifiedError = handleZodError(error);

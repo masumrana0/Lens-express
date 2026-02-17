@@ -11,6 +11,7 @@ class EmployeeService extends BaseService<
   constructor(Repository: EmployeeRepository) {
     super(Repository);
   }
+  
 }
 
 export default EmployeeService;
